@@ -124,8 +124,10 @@ function _zsh_tmux_plugin_run() {
 
   local session_name
   if [[ "$ZSH_TMUX_AUTONAME_SESSION" == "true" ]]; then
-    # Name the session after the basename of the current directory
+    # Name the session after the basename of the current directory,
+    # replacing dots with underscores since tmux disallows dots in session names
     session_name=${PWD##*/}
+    session_name=${session_name//./_}
     # If the current directory is the home directory, name it 'HOME'
     [[ "$PWD" == "$HOME" ]] && session_name="HOME"
     # If the current directory is the root directory, name it 'ROOT'
